@@ -26,17 +26,17 @@ fi
 # Get an etcdmaster
 export mymaster=$($OC_CMD get pods -l app=etcd -n openshift-etcd -o jsonpath='{range .items[0]}{.metadata.name}{"\n"}{end}')
 
-# pod is named: etcd-master0.cluster1.zcsi.local
-# but cert is named: etcd-peer-master0.cluster1.zcsi.local
+# pod is named: etcd-master0.cluster1.example.local
+# but cert is named: etcd-peer-master0.cluster1.example.local
 # Create a new variable that removes "etcd-" from the master name 
 
 export mycertmaster="etcd-peer-${mymaster:5}"
 
 echo
-echo "I will be using '$mymaster' as the etcd master."
+echo "I will be using '$mymaster' as the etcd master..."
 
 echo
-echo "Creating directory for certs"
+echo "Creating directory for certs..."
 mkdir -p $ETCD_CERTS
 
 echo
