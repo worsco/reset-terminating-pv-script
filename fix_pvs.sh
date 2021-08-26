@@ -24,7 +24,7 @@ then
 fi
 
 # Get an etcdmaster
-export mymaster=$($OC_COMMAND get pods -l app=etcd -n openshift-etcd -o jsonpath='{range .items[0]}{.metadata.name}{"\n"}{end}')
+export mymaster=$($OC_CMD get pods -l app=etcd -n openshift-etcd -o jsonpath='{range .items[0]}{.metadata.name}{"\n"}{end}')
 
 # pod is named: etcd-master0.cluster1.zcsi.local
 # but cert is named: etcd-peer-master0.cluster1.zcsi.local
