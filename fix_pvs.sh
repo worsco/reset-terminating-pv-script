@@ -2,11 +2,29 @@
 
 ETCD_CERTS=./etcd-certs/
 
+OC_CMD=oc
+RESETPV_CMD=./bin/resetpv
 echo
 echo "Starting repair, good luck!"
 
+if ! command -v $OC_CMD &> /dev/null
+then
+  echo
+  echo "Cannot find 'oc' command."
+  echo "Terminating."
+  exit
+fi
+
+if ! command -v $RESETPV_CMD &> /dev/null
+then
+  echo
+  echo "Cannot find 'resetpv' command."
+  echo "Terminating."
+  exit
+fi
+
 # Get an etcdmaster
-export mymaster=$(oc get pods -l app=etcd -n openshift-etcd -o jsonpath='{range .items[0]}{.metadata.name}{"\n"}{end}')
+export mymaster=$($OC_COMMAND get pods -l app=etcd -n openshift-etcd -o jsonpath='{range .items[0]}{.metadata.name}{"\n"}{end}')
 
 # pod is named: etcd-master0.cluster1.zcsi.local
 # but cert is named: etcd-peer-master0.cluster1.zcsi.local
@@ -57,7 +75,7 @@ if [[ -n $PVs2fix ]] ; then
     ((counter+=1))
     echo "Fixing PV #$counter: $PV"
 
-./bin/resetpv \
+$RESETPV_CMD \
 --etcd-key etcd-certs/$mycertmaster.key \
 --etcd-cert etcd-certs/$mycertmaster.crt \
 --etcd-ca etcd-certs/ca-bundle.crt \
