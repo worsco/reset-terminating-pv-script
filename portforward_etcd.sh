@@ -2,7 +2,7 @@
 
 OC_CMD=oc
 echo
-echo "Launching port-forward.."
+echo "Launching port-forward..."
 
 if ! command -v $OC_CMD &> /dev/null
 then
