@@ -7,11 +7,21 @@
 #   kubeclt/oc, but I wanted to minimize the use
 #   of additional binaries.
 #
+# * Script gets all PVs, but only sends PVs that
+#   are set to Terminating to the 'resetpv' binary.
+#   However, the 'resetpv' binary does have logic
+#   to report that a PV is not in terminating status.
+#   It may be overkill to filter out PVs not in
+#   terminating state (I had created this script
+#   before deep-diving into the resetpv code).
+#
 # Assumptions:
 # * The first etcd name returned from 'get pods -l app=etcd'
 #   will be consistent as that pod will be used using the
 #   same logic in the portforward_etcd.sh script to create
 #   port-forwarding to the etcd pod.
+#
+
 
 ETCD_CERTS=./etcd-certs/
 
