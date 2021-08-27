@@ -51,6 +51,24 @@ then
   exit
 fi
 
+# Test to see if we are logged into the cluster
+
+echo
+echo "Are we logged into the cluster?"
+$OC_CMD whoami
+
+if [[ $? -ne 0 ]]
+then
+  echo
+  echo "You are not logged into cluster."
+  echo "Terminating."
+  exit
+else
+  echo
+  echo "You are logged into cluster."
+  echo
+fi
+
 # Get an etcdmaster
 export mymaster=$($OC_CMD get pods -l app=etcd -n openshift-etcd -o jsonpath='{range .items[0]}{.metadata.name}{"\n"}{end}')
 
