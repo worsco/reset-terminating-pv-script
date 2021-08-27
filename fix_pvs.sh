@@ -1,19 +1,24 @@
 #!/bin/bash
 
 #
-# Code design goal: 
+# Code design goalis: 
 # * Minimal use of 3rd party binaries.
-#   Could have used jq to query json output from
-#   kubeclt/oc, but I wanted to minimize the use
-#   of additional binaries.
+#   - Could have used jq to query json output from
+#     kubeclt/oc, but I wanted to minimize the use
+#     of additional binaries.
 #
 # * Script gets all PVs, but only sends PVs that
 #   are set to Terminating to the 'resetpv' binary.
-#   However, the 'resetpv' binary does have logic
-#   to report that a PV is not in terminating status.
-#   It may be overkill to filter out PVs not in
-#   terminating state (I had created this script
-#   before deep-diving into the resetpv code).
+#   - However, the 'resetpv' binary does have logic
+#     to report that a PV is not in terminating status.
+#     It may be overkill to filter out PVs not in
+#     terminating state (I had created this script
+#     before deep-diving into the resetpv code).
+#
+# * Download the etcd certs an etcd pod.
+#   - Perhaps there is a way to retrieve the certs from
+#     secrets within kubernetes.  I defaulted to pulling
+#     the etcd certs from a master pod.
 #
 # Assumptions:
 # * The first etcd name returned from 'get pods -l app=etcd'
