@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#
+# Code design goal: 
+# * Minimal use of 3rd party binaries 
+#   Could have used jq to query json output from
+#   kubeclt/oc, but I wanted to minimize the use
+#   of additional binaries.
+
 ETCD_CERTS=./etcd-certs/
 
 OC_CMD=oc
@@ -18,7 +25,7 @@ fi
 if ! command -v $RESETPV_CMD &> /dev/null
 then
   echo
-  echo "Cannot find 'resetpv' command."
+  echo "Cannot find '$RESETPV_CMD' command."
   echo "Terminating."
   exit
 fi
@@ -90,4 +97,5 @@ else
   echo "No PVs in Terminating for me to fix."
 
 fi
+#EOF
 
