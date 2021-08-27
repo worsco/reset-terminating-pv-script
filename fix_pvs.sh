@@ -2,10 +2,16 @@
 
 #
 # Code design goal: 
-# * Minimal use of 3rd party binaries 
+# * Minimal use of 3rd party binaries.
 #   Could have used jq to query json output from
 #   kubeclt/oc, but I wanted to minimize the use
 #   of additional binaries.
+#
+# Assumptions:
+# * The first etcd name returned from 'get pods -l app=etcd'
+#   will be consistent as that pod will be used using the
+#   same logic in the portforward_etcd.sh script to create
+#   port-forwarding to the etcd pod.
 
 ETCD_CERTS=./etcd-certs/
 
