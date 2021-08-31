@@ -110,6 +110,24 @@ IFS="," read -a myPVarray <<< $PV
   fi
 done
 
+
+# Test to see if port-forwarding is working by testing
+# to see if port 2379 on localhost is listening
+echo
+echo "Testing to see if port-forward to etcd is available..."
+timeout 1 bash -c 'cat /dev/null > /dev/tcp/localhost/2379'
+
+if [[ $? -ne 0 ]]
+then
+  echo
+  echo "port-forward not active."
+  echo "Aborting."
+  exit
+else
+  echo
+  echo "port-forward active, continuing."
+fi
+
 # If the list is empty, don't try to fix nothing
 if [[ -n $PVs2fix ]] ; then
   counter=0
